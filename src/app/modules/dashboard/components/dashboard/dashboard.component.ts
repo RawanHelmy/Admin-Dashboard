@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
+import { AdPopupComponent } from '../ad-popup/ad-popup.component';
 import { Ads } from '../../models/ads.model';
 import { DashboardService } from '../../serivces/dashboard.service';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,7 +28,10 @@ export class dashboardComponent implements OnInit, AfterViewInit {
     this.paginator = mp;
     this.setDataSourceAttributes();
   }
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    public Dialog: MatDialog
+  ) {}
   ngOnInit(): void {
     this.dashboardService.getAll().subscribe((res) => {
       this.dataSource = new MatTableDataSource(res.tableData);
@@ -41,8 +46,18 @@ export class dashboardComponent implements OnInit, AfterViewInit {
     this.dataSource.sortingDataAccessor = this.dashboardService.sortFunction();
     this.dataSource.sort = this.sort;
   }
-  delete(event: Event, row: Ads) {}
-  view(event: Event, row: Ads) {}
+  delete(event: Event, row: Ads) {
+    event.stopPropagation();
+    this.dataSource.data = this.dataSource.data.filter((r: any) => {
+      return r != row;
+    });
+  }
+  view(event: Event, row: Ads) {
+    event.stopPropagation();
+    this.Dialog.open(AdPopupComponent, {
+      data: row,
+    });
+  }
   checkboxLabel(row?: any): string {
     return !row
       ? `${this.isAllSelected() ? 'select' : 'deselect'} all`

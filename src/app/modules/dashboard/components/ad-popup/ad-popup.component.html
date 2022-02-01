@@ -1,1 +1,56 @@
-<p>ad-popup works!</p>
+<div>
+  <img [src]="data?.image" />
+  <video [src]="data.video"></video>
+  <mat-form-field>
+    <input
+      matInput
+      [ngxMatDatetimePicker]="startDate"
+      placeholder="Choose a date"
+      [formControl]="start"
+      [disabled]="true"
+      [max]="end"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="$any(startDate)"
+    ></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker
+      #startDate
+      [showSpinners]="true"
+      [showSeconds]="true"
+      [stepHour]="1"
+      [stepMinute]="1"
+      [stepSecond]="1"
+      [touchUi]="true"
+      [enableMeridian]="true"
+      [disabled]="false"
+    >
+    </ngx-mat-datetime-picker>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      [ngxMatDatetimePicker]="endDate"
+      placeholder="Choose a date"
+      [formControl]="end"
+      [min]="start"
+      [disabled]="true"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="$any(endDate)"
+    ></mat-datepicker-toggle>
+    <ngx-mat-datetime-picker
+      #endDate
+      [showSpinners]="true"
+      [showSeconds]="true"
+      [stepHour]="1"
+      [stepMinute]="1"
+      [stepSecond]="1"
+      [touchUi]="true"
+      [enableMeridian]="true"
+      [disabled]="false"
+    >
+    </ngx-mat-datetime-picker>
+  </mat-form-field>
+</div>
