@@ -1,6 +1,21 @@
 <div>
-  <img [src]="data?.image" />
-  <video [src]="data.video"></video>
+  <div class="form-group">
+    <input
+      *ngIf="data.image"
+      formControlName="file"
+      id="file"
+      type="file"
+      class="form-control"
+      (change)="onFileChange($event)"
+    />
+  </div>
+  <img
+    [src]="data?.image"
+    *ngIf="data.image"
+    style="height: 300px; width: 500px"
+  />
+  <video [src]="data.video" *ngIf="data.video" height="200" controls></video>
+  <input type="file" (change)="onSelectFile($event)" *ngIf="data.video" />
   <mat-form-field>
     <input
       matInput

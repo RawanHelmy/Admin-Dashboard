@@ -32,7 +32,22 @@
         >
         </mat-checkbox>
       </ng-container>
-      <ng-container>
+      <ng-container *ngIf="column == 'image'">
+        <img
+          [src]="element[column]"
+          *ngIf="element[column]"
+          style="height: 100px; width: 300px"
+        />
+      </ng-container>
+      <ng-container *ngIf="column == 'video'">
+        <video
+          [src]="element[column]"
+          *ngIf="element[column]"
+          height="200"
+          controls
+        ></video>
+      </ng-container>
+      <ng-container *ngIf="column != 'image' && column != 'video'">
         <label> {{ element[column] }}</label>
       </ng-container>
       <div *ngIf="column == 'action'">
