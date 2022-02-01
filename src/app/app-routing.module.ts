@@ -1,9 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGaurdService } from './modules/shared/guards/auth-gaurd.service';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'a/dashboard' },
+  { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
   {
     path: 'login',
     loadChildren: () =>
@@ -11,13 +12,13 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
+    canActivate: [AuthGaurdService],
     loadChildren: () =>
       import('./modules/dashboard/dashboard.module').then(
         (m) => m.dashboardModule
       ),
   },
-
-  { path: '**', redirectTo: 'a' },
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
 @NgModule({
