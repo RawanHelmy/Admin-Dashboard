@@ -13,7 +13,7 @@ export function LoginReducer(state = initialState, action: AuthActions) {
     case LOGIN:
       return {
         ...state,
-        token: action.payload,
+        token: action.payload, // sets user token in state for other uses
       };
     case LOGOUT:
       return {

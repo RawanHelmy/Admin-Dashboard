@@ -29,7 +29,7 @@ export class LoginService {
         catchError(() => of({ error: true })),
         tap((res) => {
           this.store.dispatch(new Login(res.idToken));
-          localStorage.setItem('token', res.idToken);
+          localStorage.setItem('token', res.idToken); // sets user token for default login
           this.router.navigateByUrl('/dashboard');
         }),
         finalize(() => {

@@ -14,7 +14,7 @@ export class LoginEffects {
       if (token) {
         return new Login(token);
       }
-      return { type: 'DUMMY' };
+      return { type: '' };
     })
   );
   constructor(private actions$: Actions) {}

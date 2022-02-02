@@ -15,11 +15,9 @@ export class LoginComponent implements OnInit {
   });
   show_error = false;
   loading: boolean = false;
-
   constructor(private loginService: LoginService) {}
-
   ngOnInit(): void {
-    this.loginService.logout();
+    this.loginService.logout(); // clears local storage
   }
   onSubmit() {
     this.loginService
@@ -29,7 +27,7 @@ export class LoginComponent implements OnInit {
       })
       .subscribe((res) => {
         if (res.error) {
-          this.show_error = true;
+          this.show_error = true; // shows default error when backend responses
         }
         this.show_error = false;
       });

@@ -27,6 +27,7 @@ export class AuthGaurdService implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
     return this.store.select('Login').pipe(
+      // checks user token
       take(1),
       map((state) => {
         return state.token;
