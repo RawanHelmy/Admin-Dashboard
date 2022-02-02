@@ -1,6 +1,8 @@
-export interface Ads {
-  image: string;
-  video: any;
-  from_time: Date;
-  to_time: Date;
+export class Ad {
+  constructor(
+    public image: string,
+    public video: any,
+    public from_time: Date,
+    public to_time: Date
+  ) {}
 }

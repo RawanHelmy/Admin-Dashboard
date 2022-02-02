@@ -5,7 +5,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialog,
 } from '@angular/material/dialog';
-import { Ads } from '../../models/ads.model';
+import { Ad } from '../../models/ads.model';
 
 @Component({
   selector: 'app-ad-popup',
@@ -23,7 +23,7 @@ export class AdPopupComponent implements OnInit {
   });
   constructor(
     public dialog: MatDialogRef<AdPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Ads,
+    @Inject(MAT_DIALOG_DATA) public data: Ad,
     public Dialog: MatDialog
   ) {}
 
@@ -36,8 +36,12 @@ export class AdPopupComponent implements OnInit {
         to_time: new Date(),
       };
     }
-    this.start.setValue(new Date(this.data.from_time));
-    this.end.setValue(new Date(this.data.to_time));
+    this.start.setValue(
+      new Date(this.data?.from_time ? this.data?.from_time : new Date())
+    );
+    this.end.setValue(
+      new Date(this.data?.to_time ? this.data?.to_time : new Date())
+    );
   }
   get f() {
     return this.myForm.controls;
@@ -45,14 +49,11 @@ export class AdPopupComponent implements OnInit {
 
   onFileChange(event: any) {
     const reader = new FileReader();
-
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
-
       reader.onload = () => {
         this.data.image = reader.result as string;
-
         this.myForm.patchValue({
           fileSource: reader.result,
         });

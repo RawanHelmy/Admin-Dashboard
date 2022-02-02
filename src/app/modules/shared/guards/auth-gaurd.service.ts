@@ -5,16 +5,19 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { Observable, map, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { LoginService } from '../../login/services/login.service';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGaurdService implements CanActivate {
-  constructor(private loginServie: LoginService, private router: Router) {}
+  constructor(
+    private router: Router,
+    private store: Store<{ Login: { token: any } }>
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,10 +26,18 @@ export class AuthGaurdService implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    if (this.loginServie.checkIfLogged()) return true;
-    else {
-      this.router.navigateByUrl('/login');
-      return this.loginServie.checkIfLogged();
-    }
+    return this.store.select('Login').pipe(
+      take(1),
+      map((state) => {
+        return state.token;
+      }),
+      map((token) => {
+        if (token) return true;
+        else {
+          this.router.navigateByUrl('/login');
+          return false;
+        }
+      })
+    );
   }
 }

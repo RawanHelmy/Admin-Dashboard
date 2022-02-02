@@ -1,67 +1,36 @@
-<button color="primary" mat-raised-button (click)="addAd()">add</button>
-<table
-  mat-table
-  [dataSource]="dataSource"
-  matSort
-  matSortActive="status"
-  matSortDirection="desc"
->
-  <ng-container [matColumnDef]="column" *ngFor="let column of dataKeys">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      <label *ngIf="column != 'action' && column != 'select'">{{
-        column
-      }}</label>
-      <mat-checkbox
-        (click)="$event.stopPropagation()"
-        (change)="$event ? masterToggle() : null"
-        [checked]="selection.hasValue() && isAllSelected()"
-        [indeterminate]="selection?.hasValue() && !isAllSelected()"
-        [aria-label]="checkboxLabel()"
-        color="accent"
-        *ngIf="column == 'select'"
-      >
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let element">
-      <ng-container *ngIf="column == 'select'">
-        <mat-checkbox
-          (click)="$event.stopPropagation()"
-          (change)="$event ? selection.toggle(element) : null"
-          [checked]="selection.isSelected(element)"
-          [aria-label]="checkboxLabel(element)"
-          color="primary"
-        >
-        </mat-checkbox>
-      </ng-container>
-      <ng-container *ngIf="column == 'image'">
-        <img
-          [src]="element[column]"
-          *ngIf="element[column]"
-          style="height: 100px; width: 300px"
-        />
-      </ng-container>
-      <ng-container *ngIf="column == 'video'">
-        <video
-          [src]="element[column]"
-          *ngIf="element[column]"
-          height="200"
-          controls
-        ></video>
-      </ng-container>
-      <ng-container *ngIf="column != 'image' && column != 'video'">
-        <label> {{ element[column] }}</label>
-      </ng-container>
-      <div *ngIf="column == 'action'">
-        <a (click)="viewAd($event, element)">View </a>
-        <a (click)="deleteAd($event, element)"><mat-icon> delete</mat-icon> </a>
-      </div>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="dataKeys; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: dataKeys"></tr>
-</table>
-<mat-paginator
-  [pageSizeOptions]="[5, 10, 25]"
-  pageSize="5"
-  showFirstLastButtons
-></mat-paginator>
+<button color="primary" mat-raised-button (click)="dashboardService.addNew()">
+  add
+</button>
+<div *ngFor="let ad of adsList | async; let i = index">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-subtitle>
+        <label> From {{ ad.from_time | date: "MMM d, y, h:mm:ss a" }} </label>
+        <br />
+        <label> To {{ ad.to_time | date: "MMM d, y, h:mm:ss a" }} </label>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      [src]="ad.image"
+      width="100"
+      height="100"
+      *ngIf="ad.image"
+    />
+    <video
+      [src]="ad.video"
+      *ngIf="ad.video"
+      height="100"
+      controls
+      width="100"
+    ></video>
+    <mat-card-actions>
+      <button mat-raised-button (click)="dashboardService.editAd(ad, i)">
+        Edit
+      </button>
+      <button mat-raised-button (click)="dashboardService.deleteAd(i)">
+        Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
