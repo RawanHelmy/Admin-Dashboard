@@ -16,7 +16,7 @@ export class AdPopupComponent implements OnInit {
   show = false;
   start: FormControl = new FormControl();
   end: FormControl = new FormControl();
-  myForm = new FormGroup({
+  imageForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required]),
@@ -44,7 +44,7 @@ export class AdPopupComponent implements OnInit {
     );
   }
   get f() {
-    return this.myForm.controls;
+    return this.imageForm.controls;
   }
 
   onFileChange(event: any) {
@@ -54,7 +54,7 @@ export class AdPopupComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.data.image = reader.result as string;
-        this.myForm.patchValue({
+        this.imageForm.patchValue({
           fileSource: reader.result,
         });
       };

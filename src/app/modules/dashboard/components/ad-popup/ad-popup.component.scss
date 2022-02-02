@@ -1,0 +1,48 @@
+.content_wrapper {
+  display: flex;
+  background-color: #726876;
+  align-items: flex-start;
+  flex-direction: column;
+  overflow-y: auto;
+  min-width: 700px;
+  min-height: 300px;
+  .media_wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  .btn_wrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .dates_wrapper {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+  }
+
+  label {
+    margin-block: 20px;
+  }
+  .image_wrapper,
+  .video_wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    img,
+    video {
+      width: 200px;
+      height: 200px;
+      margin-inline-end: 20px;
+    }
+
+    button {
+      width: fit-content;
+      height: fit-content;
+    }
+  }
+}

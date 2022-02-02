@@ -1,36 +1,30 @@
-<button color="primary" mat-raised-button (click)="dashboardService.addNew()">
-  add
-</button>
-<div *ngFor="let ad of adsList | async; let i = index">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-subtitle>
+<div class="content_wrapper">
+  <div class="header_wrapper">
+    <h1>Dashboard (ADs List)</h1>
+    <button
+      color="primary"
+      mat-raised-button
+      (click)="dashboardService.addNew()"
+    >
+      Add
+    </button>
+  </div>
+  <div class="card_wrapper">
+    <mat-card *ngFor="let ad of adsList | async; let i = index">
+      <mat-card-header>
         <label> From {{ ad.from_time | date: "MMM d, y, h:mm:ss a" }} </label>
-        <br />
         <label> To {{ ad.to_time | date: "MMM d, y, h:mm:ss a" }} </label>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <img
-      mat-card-image
-      [src]="ad.image"
-      width="100"
-      height="100"
-      *ngIf="ad.image"
-    />
-    <video
-      [src]="ad.video"
-      *ngIf="ad.video"
-      height="100"
-      controls
-      width="100"
-    ></video>
-    <mat-card-actions>
-      <button mat-raised-button (click)="dashboardService.editAd(ad, i)">
-        Edit
-      </button>
-      <button mat-raised-button (click)="dashboardService.deleteAd(i)">
-        Delete
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-header>
+      <img mat-card-image [src]="ad.image" *ngIf="ad.image" />
+      <video [src]="ad.video" *ngIf="ad.video" controls></video>
+      <mat-card-actions>
+        <button mat-raised-button (click)="dashboardService.editAd(ad, i)">
+          Edit
+        </button>
+        <button mat-raised-button (click)="dashboardService.deleteAd(i)">
+          Delete
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
