@@ -2,6 +2,24 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.2.
 
+## About the Project
+
+An Admin Dashboard (ADs List) that helps user to create a new Ad by uploading media (Image/Video) including start and end dates , edit or delete an existing AD. Including User Verification.
+
+## Build Using
+
+- Angular 13
+- NGRX 13
+- Angular Material 13
+
+## Folder Structure
+
+- Module
+  - Components
+  - Services
+  - Models
+  - Store
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
