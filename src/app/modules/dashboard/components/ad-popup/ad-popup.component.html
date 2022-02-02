@@ -1,7 +1,7 @@
 <div>
   <div class="form-group">
+    Image
     <input
-      *ngIf="data.image"
       formControlName="file"
       id="file"
       type="file"
@@ -15,7 +15,8 @@
     style="height: 300px; width: 500px"
   />
   <video [src]="data.video" *ngIf="data.video" height="200" controls></video>
-  <input type="file" (change)="onSelectFile($event)" *ngIf="data.video" />
+  Video
+  <input type="file" (change)="onSelectFile($event)" />
   <mat-form-field>
     <input
       matInput
@@ -69,3 +70,5 @@
     </ngx-mat-datetime-picker>
   </mat-form-field>
 </div>
+<button mat-raised-button (click)="save()">Save</button>
+<button mat-raised-button (click)="cancel()">Cancel</button>

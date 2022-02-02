@@ -46,17 +46,30 @@ export class dashboardComponent implements OnInit, AfterViewInit {
     this.dataSource.sortingDataAccessor = this.dashboardService.sortFunction();
     this.dataSource.sort = this.sort;
   }
-  delete(event: Event, row: Ads) {
+  deleteAd(event: Event, row: Ads) {
     event.stopPropagation();
     this.dataSource.data = this.dataSource.data.filter((r: any) => {
       return r != row;
     });
   }
-  view(event: Event, row: Ads) {
+  addAd() {
+    this.Dialog.open(AdPopupComponent)
+      .afterClosed()
+      .subscribe((ad) => {
+        this.dataSource.data.push(ad);
+      });
+  }
+  viewAd(event: Event, row: Ads) {
     event.stopPropagation();
     this.Dialog.open(AdPopupComponent, {
-      data: row,
-    });
+      data: { ...row },
+    })
+      .afterClosed()
+      .subscribe((res) => {
+        let index = this.dataSource.data.findIndex((ad) => ad == row);
+        this.dataSource.data[index] = res;
+        this.dataSource = new MatTableDataSource(this.dataSource.data);
+      });
   }
   checkboxLabel(row?: any): string {
     return !row

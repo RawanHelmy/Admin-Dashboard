@@ -14,8 +14,8 @@ import { Ads } from '../../models/ads.model';
 })
 export class AdPopupComponent implements OnInit {
   show = false;
-  start = new FormControl(new Date());
-  end = new FormControl(new Date());
+  start: FormControl = new FormControl();
+  end: FormControl = new FormControl();
   myForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     file: new FormControl('', [Validators.required]),
@@ -27,7 +27,18 @@ export class AdPopupComponent implements OnInit {
     public Dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.data) {
+      this.data = {
+        image: '',
+        video: null,
+        from_time: new Date(),
+        to_time: new Date(),
+      };
+    }
+    this.start.setValue(new Date(this.data.from_time));
+    this.end.setValue(new Date(this.data.to_time));
+  }
   get f() {
     return this.myForm.controls;
   }
@@ -57,5 +68,11 @@ export class AdPopupComponent implements OnInit {
         this.data.video = (<FileReader>event.target).result;
       };
     }
+  }
+  save() {
+    this.dialog.close(this.data);
+  }
+  cancel() {
+    this.dialog.close();
   }
 }

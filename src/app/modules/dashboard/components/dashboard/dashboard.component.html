@@ -1,3 +1,4 @@
+<button color="primary" mat-raised-button (click)="addAd()">add</button>
 <table
   mat-table
   [dataSource]="dataSource"
@@ -51,8 +52,8 @@
         <label> {{ element[column] }}</label>
       </ng-container>
       <div *ngIf="column == 'action'">
-        <a (click)="view($event, element)">View </a>
-        <a (click)="delete($event, element)"><mat-icon> delete</mat-icon> </a>
+        <a (click)="viewAd($event, element)">View </a>
+        <a (click)="deleteAd($event, element)"><mat-icon> delete</mat-icon> </a>
       </div>
     </td>
   </ng-container>
