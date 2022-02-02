@@ -1,15 +1,12 @@
 <div class="content_wrapper">
+  <mat-radio-group [(ngModel)]="type" (change)="onTypeChange($event)">
+    <mat-radio-button value="1"><label>Image:</label></mat-radio-button>
+    <mat-radio-button value="2"><label>Video:</label></mat-radio-button>
+  </mat-radio-group>
   <div class="media_wrapper">
     <div>
-      <label>Image:</label>
       <div class="image_wrapper">
-        <input
-          type="file"
-          (change)="onFileChange($event)"
-          [value]="data.image"
-          hidden
-          #image
-        />
+        <input type="file" (change)="onImageChange($event)" hidden #image />
         <img
           [src]="
             data?.image
@@ -17,13 +14,17 @@
               : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADdCAMAAACc/C7aAAAAaVBMVEXDw8MAAADGxsaXl5fJycnMzMxSUlKRkZF1dXV5eXnCwsIFBQWlpaV+fn66urqurq5dXV1sbGxMTEyKiopXV1czMzOcnJwaGhqoqKiEhIQlJSUrKysODg5mZmZHR0ezs7M7OzsVFRU5OTmFwHepAAAC+klEQVR4nO3bi1KjMBSAYXIarIbea2uttVXf/yE36Q0qobrITHP0/2Z2Zt2xDP+GQEDMMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQ56dCtY+JcZge9zgzsrXvipGc61EtzLO29KbpKLMx9mkPpI83H410XFiblyGFufy7Ph0lHPnSya/aByFuqRv7sSqchUvwV83k4EHFtt6QhcrwOl4GXZdv9VBApq3CdK/w1c9nykNUQ+XK6pG/abin5SFmWy5Z+u6FMP7K6unttt6cKIqflSE4a9tQd/zRtKflI6ZeRw6Y9deFS2ryl5COzUXkzMWoIcZm45bixUkGkfd6PormyyBMZPxkzaVouKIjM7PAwjtPm/XRP4Rse8/hgaoh0djzdbl9XeePJxc7CUBdmHi/REOkPx3Bb2DTlnOwP6L34vNQReZ3szqffRXRa/oJIcetzpJnksS2pj3T5pPrIqmfr6wL9kbZvynWf/8uuPi21Rzrxa4WijCzMW/0j6iKdV/lSZPH5Ges0V3+4flqi+uV77Ql07QmCtkg7GlcumM4uI0/ZC+UjGe67FpVl+qhWGGw/f0pRpIS99aeWjTtV2rdopBleTktNkZkMwvmzMHf20BCaY42FWV3MXFWR2eZY8ezvpY/N8aF8UhuZz84jtV+Iu/d4YfiGu+oHFUX6e43i1LDODs1FfCT9P8+lXN7piZRxNWOS23nTOB7syvsRPZHZ+qKhv2uckMfBLqelmsjLew1/anlpOlbLwT5vSUeks/2rQVG9U5eSyLC0+f+3JE53XToiRT6+OjhjPjRFunz6dVHM9DAtVURG7zW+ZbAfSw2R0mpCHvi1vFMRabctC/1/zdaKisjTTwnaRIYfhCmIdHbQunF/Rl5J8pEizfca37Pxkzr5yNnXHdfNJPGRHNrRvP9D81HqkbnNO5D2W5K//X1XFyK7kuyby3/iHXTp8rcJVmk2/onfCwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALi1f4DsKck70eEzAAAAAElFTkSuQmCC'
           "
         />
-        <button mat-raised-button color="accent" (click)="image.click()">
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="image.click()"
+          [disabled]="type != '1'"
+        >
           Choose Image
         </button>
       </div>
     </div>
     <div>
-      <label>Video:</label>
       <div class="video_wrapper">
         <video
           [src]="data.video"
@@ -31,8 +32,13 @@
           controls
           poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAYFBMVEVNTU3///8/Pz/Ly8tKSkpEREQ3NzdCQkJbW1s7Ozv39/exsbHBwcH7+/s9PT1iYmLa2tqFhYWdnZ16enqJiYnq6upxcXFsbGyVlZXi4uJnZ2e8vLyGhoawsLDX19ejo6NE5dC5AAABqElEQVR4nO3bbU7bQBiF0bwhLhAgQAhQaGn3v8saIVA+Zjwz5odr6ZwVjB75KrZiLxYAAAAAAAAAAAAAAAAAAAAAcGy1mvoEc9Y93C8FHGu1i3h8uhRwnOVZ9M4W51MfZJ4+8kVsXYBjfObrF7wRsNlXvojrVTf1aWZnL1/cWHCr/XwRL88W3OQwnwU3Os4XNz8tuN5Jvn7Br5upTzUbiXwRvzoLrpPM1y/4hwXXSOfrF3y7nPpoc5DL1y/43IKL8vlivbPgkoF8EXcWXDCYL+LKggcV8lnwsFK+fsEXFpxVztcveGnBGTX5LDirKt/7gv0ZklKZL2KrX0J1vri131P1+Z7lO1Wd79rtS0JlvvXvy6lP+l+qy3e1ceeXVJPPc0dWOd/63j1zVjGfJ7YhhXx2O2wwn92WDOWz26J8vj92W5bLZ7dVMvne7LZKMp/d1krks9t6p/n83jY4zuc+uclhvvXOu5FNDvJ5r6/VXr6XV7tt9ZXPO81jfObzRv0oH/l8kTVStw3fA35D9/fN16jf0HUuPQAAAAAAAAAAAAAAAAAAAACYxj/fOQxDVwoVaAAAAABJRU5ErkJggg=="
         ></video>
-        <input type="file" (change)="onSelectFile($event)" hidden #video />
-        <button mat-raised-button color="accent" (click)="video.click()">
+        <input type="file" (change)="onVideoChange($event)" hidden #video />
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="video.click()"
+          [disabled]="type == '1'"
+        >
           Choose Video
         </button>
       </div>

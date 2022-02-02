@@ -6,6 +6,12 @@
   overflow-y: auto;
   min-width: 700px;
   min-height: 300px;
+  mat-radio-group {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 290px;
+  }
   .media_wrapper {
     display: flex;
     width: 100%;
