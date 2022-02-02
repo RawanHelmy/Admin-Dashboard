@@ -56,7 +56,9 @@ export class dashboardComponent implements OnInit, AfterViewInit {
     this.Dialog.open(AdPopupComponent)
       .afterClosed()
       .subscribe((ad) => {
-        this.dataSource.data.push(ad);
+        if (ad) {
+          this.dataSource.data.push(ad);
+        }
       });
   }
   viewAd(event: Event, row: Ads) {
@@ -66,9 +68,11 @@ export class dashboardComponent implements OnInit, AfterViewInit {
     })
       .afterClosed()
       .subscribe((res) => {
-        let index = this.dataSource.data.findIndex((ad) => ad == row);
-        this.dataSource.data[index] = res;
-        this.dataSource = new MatTableDataSource(this.dataSource.data);
+        if (res) {
+          let index = this.dataSource.data.findIndex((ad) => ad == row);
+          this.dataSource.data[index] = res;
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+        }
       });
   }
   checkboxLabel(row?: any): string {

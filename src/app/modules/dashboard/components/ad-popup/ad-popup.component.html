@@ -1,11 +1,10 @@
 <div>
-  <div class="form-group">
+  <div [formGroup]="myForm">
     Image
     <input
       formControlName="file"
       id="file"
       type="file"
-      class="form-control"
       (change)="onFileChange($event)"
     />
   </div>

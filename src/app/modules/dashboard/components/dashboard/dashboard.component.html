@@ -15,7 +15,7 @@
         (click)="$event.stopPropagation()"
         (change)="$event ? masterToggle() : null"
         [checked]="selection.hasValue() && isAllSelected()"
-        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [indeterminate]="selection?.hasValue() && !isAllSelected()"
         [aria-label]="checkboxLabel()"
         color="accent"
         *ngIf="column == 'select'"
